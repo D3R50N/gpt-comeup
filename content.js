@@ -37,7 +37,8 @@ function getApiKey() {
 // Fonction pour envoyer une requête à l'API GPT-3
 async function generateResponse(prompt) {
   const apiKey = await getApiKey();
-  const response = await fetch("https://api.openai.com/v1/completions", {
+//alert(apiKey);  
+const response = await fetch("https://api.openai.com/v1/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,8 +46,8 @@ async function generateResponse(prompt) {
     },
     body: JSON.stringify({
       model: "text-davinci-003",
-      prompt: `Tu es maintenant un développeur. Un client t'zenvoie ceci "${prompt}" et te demande de lui répondre.`,
-      max_tokens: 128,
+      prompt: `Tu es maintenant un développeur professionnel freelance sur la plateforme Comeup. Un client t'envoie ce message "${prompt}" et tu dois répondre de manière professionelle.`,
+      max_tokens: 2048,
       n: 1,
       // stop: "\n",
       temperature: 1,
@@ -67,6 +68,10 @@ function handleClick(prompt) {
       "<b>Réponse générée</b> : <br>" + response;
     document.getElementById("btn_copy").removeAttribute("disabled");
     document.getElementById("btn").removeAttribute("disabled");
+  }).catch((err)=>{
+    console.log(err);
+    document.getElementById("output").innerHTML =
+      "<i style='color:red;'>Impossible de générer une réponse</i>";
   });
 }
 
